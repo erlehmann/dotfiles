@@ -1,0 +1,61 @@
+general {
+        colors = true
+        interval = 5
+        output_format = none
+}
+
+#order += "ipv6"
+order += "disk /home/erlehmann"
+#order += "run_watch DHCP"
+#order += "run_watch VPN"
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "ethernet usb0"
+order += "load"
+order += "cpu_temperature 0"
+order += "battery 0"
+order += "time"
+
+wireless wlan0 {
+        format_up = "W ⌃ %essid / %quality / %bitrate"
+        format_down = "W ⌄"
+}
+
+ethernet eth0 {
+        # if you use %speed, i3status requires the cap_net_admin capability
+        format_up = "E ⌃ %speed"
+	    format_down = "E ⌄"
+}
+
+ethernet usb0 {
+        format_up = "U ⌃"
+        format_down = "U ⌄"
+}
+
+battery 0 {
+        format = "⌁ %percentage %remaining"
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/vpnc/pid"
+}
+
+time {
+	format = "%Y-%m-%d %H:%M"
+}
+
+load {
+	format = "%1min"
+}
+
+cpu_temperature 0 {
+	format = "%degrees °C"
+}
+
+disk "/home/erlehmann" {
+	format = "⌂ %avail"
+}
