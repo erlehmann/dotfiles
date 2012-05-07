@@ -109,11 +109,6 @@ assign [class="^Geany$"] → 5: text
 assign [class="^Rhythmbox$"] → 6: media
 assign [class="^Totem$"] → 6: media
 
-# start apps
-exec iceweasel
-exec sylpheed-claws-gtk2
-exec geany
-
 # wiggle
 workspace_auto_back_and_forth yes
 
