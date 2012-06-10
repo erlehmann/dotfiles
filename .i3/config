@@ -103,8 +103,10 @@ bindsym $mod+Shift+rightdoublequotemark move workspace 10
 
 # assign windows to workspaces
 assign [class="^Iceweasel$"] → 1: web
-assign [class="^Sylpheed-claws-gtk2$"] → 2: mail
-assign [class="^Gajim.py$"] → 4: xmpp
+assign [class="^Links$"] → 1: Web
+assign [class="^Claws-mail$"] → 2: mail
+assign [class="^Gajim$"] → 4: xmpp
+assign [class="^Emacs$"] → 5: text
 assign [class="^Geany$"] → 5: text
 assign [class="^Rhythmbox$"] → 6: media
 assign [class="^Totem$"] → 6: media
