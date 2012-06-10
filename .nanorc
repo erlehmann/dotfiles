@@ -1,0 +1,11 @@
+set autoindent
+unset backup
+set morespace
+set smarthome
+set softwrap
+unset suspend  # using ^Z for undo
+set tabsize 4
+set tabstospaces
+set undo
+bind ^Z undo all
+bind ^Y redo all
