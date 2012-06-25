@@ -124,6 +124,9 @@ for_window [class="^Xfce4-notifyd$"] floating enable; border none; focus mode_to
 # fix for run dialog
 for_window [class="^Xfrun4$"] floating enable
 
+# set color temperature of display according to time of day in Berlin
+exec gtk-redshift -l 52.518611:13.408056
+
 # enforce minimal borders
 new_window 1pixel
 
