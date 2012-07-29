@@ -1,5 +1,6 @@
 set autoindent
 unset backup
+set fill 72
 set morespace
 set smarthome
 set softwrap
