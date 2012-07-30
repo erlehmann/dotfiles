@@ -3,3 +3,5 @@ Player:
 
 Graphics:
 	Renderer: Cg
+	CapFramerate: True
+	MaxFramerate: 30
