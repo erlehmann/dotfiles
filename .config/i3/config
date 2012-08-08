@@ -102,6 +102,7 @@ bindsym $mod+Shift+leftdoublequotemark move workspace 9
 bindsym $mod+Shift+rightdoublequotemark move workspace 10
 
 # assign windows to workspaces
+assign [class="^Conkeror$"] → 1: web
 assign [class="^Iceweasel$"] → 1: web
 assign [class="^Links$"] → 1: Web
 assign [class="^Claws-mail$"] → 2: mail
