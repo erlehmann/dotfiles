@@ -1,0 +1,41 @@
+allow_browser_window_close = false;
+hint_digits="0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+url_remoting_fn = load_url_in_new_window;
+
+define_variable("firebug_url",
+    "http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js");
+
+function firebug (I) {
+    var doc = I.buffer.document;
+    var script = doc.createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    script.setAttribute('src', firebug_url);
+    script.setAttribute('onload', 'firebug.init();');
+    doc.body.appendChild(script);
+}
+interactive("firebug", "open firebug lite", firebug);
+
+define_key(content_buffer_normal_keymap, "d", "follow-new-window");
+
+define_webjump("github", "http://github.com/search?q=%s&type=Everything");
+define_webjump("krautchan", "https://krautchan.net/board/%s");
+define_webjump("logs", "http://logs.2pktfkt.de/%s");
+
+register_user_stylesheet(
+    "data:text/css," + escape(
+        "@namespace url(\"http://www.w3.org/1999/xhtml\");" +
+        "span.__conkeror_hint { font-size: 18px !important;"+
+        "line-height: 18px !important; }"
+    )
+);
+
+require("block-content-focus-change.js");
+
+require("favicon");
+add_hook("mode_line_hook", mode_line_adder(buffer_icon_widget), true);
+
+require("noscript");
+
+session_pref("intl.accept_languages", "de-de, de, en-us, en");
+
+set_protocol_handler("mailto", find_file_in_path("claws-mail"));
