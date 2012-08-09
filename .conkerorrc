@@ -15,7 +15,7 @@ function firebug (I) {
 }
 interactive("firebug", "open firebug lite", firebug);
 
-define_key(content_buffer_normal_keymap, "d", "follow-new-window");
+define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
 
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("krautchan", "https://krautchan.net/board/%s");
