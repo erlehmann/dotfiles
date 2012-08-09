@@ -1,5 +1,5 @@
 allow_browser_window_close = false;
-hint_digits="0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+hint_digits="0abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ";
 url_remoting_fn = load_url_in_new_window;
 
 define_variable("firebug_url",
