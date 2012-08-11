@@ -43,8 +43,6 @@ add_hook("content_policy_hook", content_policy_bytype);
 require("favicon");
 add_hook("mode_line_hook", mode_line_adder(buffer_icon_widget), true);
 
-require("noscript");
-
 session_pref("intl.accept_languages", "de-de, de, en-us, en");
 
 set_protocol_handler("mailto", find_file_in_path("claws-mail"));
