@@ -16,6 +16,8 @@ function firebug (I) {
 interactive("firebug", "open firebug lite", firebug);
 
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
+define_key(content_buffer_normal_keymap, "f9", "content-policy-disable")
+define_key(content_buffer_normal_keymap, "f10", "content-policy-enable")
 
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("krautchan", "https://krautchan.net/board/%s");
@@ -30,6 +32,13 @@ register_user_stylesheet(
 );
 
 require("block-content-focus-change.js");
+
+require("content-policy.js");
+content_policy_bytype_table.image = function() content_policy_reject;
+content_policy_bytype_table.media = function() content_policy_reject;
+content_policy_bytibe_table.object = function() content_policy_reject;
+content_policy_bytype_table.script = function() content_policy_reject;
+add_hook("content_policy_hook", content_policy_bytype);
 
 require("favicon");
 add_hook("mode_line_hook", mode_line_adder(buffer_icon_widget), true);
