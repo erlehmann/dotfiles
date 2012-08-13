@@ -1,6 +1,15 @@
 allow_browser_window_close = false;
+
+cwd=get_home_directory();
+cwd.append("downloads");
+
+download_buffer_automatic_open_target=OPEN_NEW_BUFFER_BACKGROUND;
 hint_digits="0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 url_remoting_fn = load_url_in_new_window;
+
+add_hook("mode_line_hook", mode_line_adder(downloads_status_widget));
+add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
+remove_hook("mode_line_hook", mode_line_adder(clock_widget));
 
 define_variable("firebug_url",
     "http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js");
@@ -14,14 +23,15 @@ function firebug (I) {
     doc.body.appendChild(script);
 }
 interactive("firebug", "open firebug lite", firebug);
+define_key(content_buffer_normal_keymap, "f12", "firebug");
 
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
-define_key(content_buffer_normal_keymap, "f9", "content-policy-disable")
-define_key(content_buffer_normal_keymap, "f10", "content-policy-enable")
+define_key(content_buffer_normal_keymap, "j", "content-policy-toggle");
 
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("krautchan", "https://krautchan.net/board/%s");
 define_webjump("logs", "http://logs.2pktfkt.de/%s");
+define_webjump("reddit","http://www.reddit.com/r/%s");
 
 register_user_stylesheet(
     "data:text/css," + escape(
@@ -34,10 +44,19 @@ register_user_stylesheet(
 require("block-content-focus-change.js");
 
 require("content-policy.js");
-content_policy_bytype_table.image = function() content_policy_reject;
-content_policy_bytype_table.media = function() content_policy_reject;
-content_policy_bytibe_table.object = function() content_policy_reject;
-content_policy_bytype_table.script = function() content_policy_reject;
+function block_content(content_type, content_location) {
+    if (content_location.host == "localhost") {
+        return content_policy_accept;
+    } else {
+        return content_policy_reject;
+    };
+};
+
+content_policy_bytype_table.font = block_content;
+content_policy_bytype_table.image = block_content;
+content_policy_bytype_table.media = block_content;
+content_policy_bytype_table.object = block_content;
+content_policy_bytype_table.script = block_content;
 add_hook("content_policy_hook", content_policy_bytype);
 
 require("favicon");
