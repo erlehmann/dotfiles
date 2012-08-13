@@ -5,7 +5,7 @@ cwd.append("downloads");
 
 download_buffer_automatic_open_target=OPEN_NEW_BUFFER_BACKGROUND;
 hint_digits="0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-url_remoting_fn = load_url_in_new_window;
+url_remoting_fn = load_url_in_new_buffer;
 
 add_hook("mode_line_hook", mode_line_adder(downloads_status_widget));
 add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
