@@ -37,7 +37,7 @@ register_user_stylesheet(
     "data:text/css," + escape(
         "@namespace url(\"http://www.w3.org/1999/xhtml\");" +
         "span.__conkeror_hint { font-size: 18px !important; line-height: 18px !important; }" +
-        "[title] { border-bottom: 2px dotted !important; position: relative; }" +
+        "[title] { border-bottom: 2px dotted !important; cursor: help; position: relative; }" +
         "[title]:hover::after { background-color: white; border: 2px solid !important; color: black; content: attr(title); left: 0; position: absolute; top: 1.5em; z-index: 1; }"
     )
 );
