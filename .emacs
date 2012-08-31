@@ -16,6 +16,10 @@
 
 (prefer-coding-system       'utf-8)
 
+(require 'show-wspace)
+(add-hook 'font-lock-mode-hook 'show-ws-highlight-tabs)
+(add-hook 'font-lock-mode-hook 'show-ws-highlight-trailing-whitespace)
+
 (setq default-buffer-file-coding-system 'utf-8)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
