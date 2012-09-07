@@ -28,6 +28,7 @@ define_key(content_buffer_normal_keymap, "f12", "firebug");
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
 define_key(content_buffer_normal_keymap, "j", "content-policy-toggle");
 
+define_webjump("crawl", "http://crawl.chaosforge.org/index.php?title=%s");
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("krautchan", "https://krautchan.net/board/%s");
 define_webjump("logs", "http://logs.2pktfkt.de/%s");
