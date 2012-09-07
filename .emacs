@@ -14,6 +14,8 @@
  )
 (desktop-save-mode 1)
 
+(global-linum-mode t)
+
 (prefer-coding-system       'utf-8)
 
 (require 'show-wspace)
