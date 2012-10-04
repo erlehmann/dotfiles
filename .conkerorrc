@@ -26,7 +26,9 @@ interactive("firebug", "open firebug lite", firebug);
 define_key(content_buffer_normal_keymap, "f12", "firebug");
 
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
-define_key(content_buffer_normal_keymap, "j", "content-policy-toggle");
+define_key(content_buffer_normal_keymap, "y", "block-images-toggle");
+define_key(content_buffer_normal_keymap, "j", "block-scripts-toggle");
+define_key(content_buffer_normal_keymap, ".", "content-policy-toggle");
 
 define_webjump("crawl", "http://crawl.chaosforge.org/index.php?title=%s");
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
@@ -63,6 +65,62 @@ content_policy_bytype_table.media = block_content;
 content_policy_bytype_table.object = block_content;
 content_policy_bytype_table.script = block_content;
 add_hook("content_policy_hook", content_policy_bytype);
+
+interactive("block-images-toggle",
+    "Turn the content-policy block for images off if it is on and on if it is off.",
+    function (I) {
+        if (content_policy_bytype_table.image == block_content) {
+            content_policy_bytype_table.image = function () content_policy_accept;
+            I.minibuffer.message("Images are allowed.");
+        } else {
+            content_policy_bytype_table.image = block_content;
+            I.minibuffer.message("Images are blocked.");
+        }
+    }
+);
+
+interactive("block-scripts-toggle",
+    "Turn the content-policy for scripts off if it is on, and on if it is off.",
+    function (I) {
+        if (content_policy_bytype_table.script == block_content) {
+            content_policy_bytype_table.script = function () content_policy_accept;
+            I.minibuffer.message("Scripts are allowed.");
+        } else {
+            content_policy_bytype_table.script = block_content;
+            I.minibuffer.message("Scripts are blocked.");
+        }
+    }
+);
+
+function content_policy_widget (window) {
+    this.class_name = "content-policy-widget";
+    text_widget.call(this, window);
+    this.add_hook("keypress_hook");
+};
+
+content_policy_widget.prototype = {
+    constructor: content_policy_widget,
+    __proto__: text_widget.prototype,
+    update: function () {
+        var text = ""
+        if (content_policy_bytype_table.image == block_content) {
+            text += "noIMG"
+        } else {
+            text += "IMG"
+        };
+        text += " ";
+        if (content_policy_bytype_table.script == block_content) {
+            text += "noJS";
+        } else {
+            text += "JS";
+        };
+        this.view.text = text;
+    }
+};
+
+add_hook("mode_line_hook", mode_line_adder(content_policy_widget));
+
+require("adblockplus.js");
 
 require("favicon");
 add_hook("mode_line_hook", mode_line_adder(buffer_icon_widget), true);
