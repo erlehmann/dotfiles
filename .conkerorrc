@@ -35,6 +35,7 @@ define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("krautchan", "https://krautchan.net/board/%s");
 define_webjump("logs", "http://logs.2pktfkt.de/%s");
 define_webjump("reddit","http://www.reddit.com/r/%s");
+define_webjump("rfc", "http://tools.ietf.org/html/rfc%s.txt");
 
 register_user_stylesheet(
     "data:text/css," + escape(
