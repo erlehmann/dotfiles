@@ -69,8 +69,6 @@ content_policy_bytype_table.object = block_content;
 content_policy_bytype_table.script = block_content;
 add_hook("content_policy_hook", content_policy_bytype);
 
-define_hook("content_policy_toggle_hook");
-
 interactive("block-images-toggle",
     "Turn the content-policy block for images off if it is on and on if it is off.",
     function (I) {
@@ -81,7 +79,6 @@ interactive("block-images-toggle",
             content_policy_bytype_table.image = block_content;
             I.minibuffer.message("Images are blocked.");
         }
-        content_policy_toggle_hook.run();
     }
 );
 
@@ -97,14 +94,13 @@ interactive("block-scripts-toggle",
             session_pref('javascript.enabled', false);
             I.minibuffer.message("Scripts are blocked.");
         }
-        content_policy_toggle_hook.run();
     }
 );
 
 function content_policy_widget (window) {
     this.class_name = "content-policy-widget";
     text_widget.call(this, window);
-    this.add_hook("content_policy_toggle_hook");
+    this.add_hook("keypress_hook");
 };
 
 content_policy_widget.prototype = {
