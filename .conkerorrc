@@ -90,9 +90,11 @@ interactive("block-scripts-toggle",
     function (I) {
         if (content_policy_bytype_table.script == block_content) {
             content_policy_bytype_table.script = function () content_policy_accept;
+            session_pref('javascript.enabled', true);
             I.minibuffer.message("Scripts are allowed.");
         } else {
             content_policy_bytype_table.script = block_content;
+            session_pref('javascript.enabled', false);
             I.minibuffer.message("Scripts are blocked.");
         }
         content_policy_toggle_hook.run();
@@ -133,5 +135,6 @@ require("favicon");
 add_hook("mode_line_hook", mode_line_adder(buffer_icon_widget), true);
 
 session_pref("intl.accept_languages", "de-de, de, en-us, en");
+session_pref('javascript.enabled', false);
 
 set_protocol_handler("mailto", find_file_in_path("claws-mail"));
