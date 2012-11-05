@@ -37,6 +37,13 @@ define_webjump("krautchan", "https://krautchan.net/board/%s");
 define_webjump("logs", "http://logs.2pktfkt.de/%s");
 define_webjump("reddit","http://www.reddit.com/r/%s");
 define_webjump("rfc", "http://tools.ietf.org/html/rfc%s.txt");
+define_webjump("wayback", function (url) {
+    if (url) {
+        return "http://web.archive.org/web/*/" + url;
+    } else {
+        return "javascript:window.location.href='http://web.archive.org/web/*/'+window.location.href;";
+    }
+}, $argument = "optional");
 
 register_user_stylesheet(
     "data:text/css," + escape(
