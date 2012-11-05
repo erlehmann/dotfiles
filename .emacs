@@ -26,16 +26,15 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-(add-to-list 'load-path "{path}/n3-mode.el")
+(add-to-list 'load-path "~/.emacs.d/")
 (autoload 'n3-mode "n3-mode" "Major mode for OWL or N3 files" t)
+(add-hook 'n3-mode-hook 'turn-on-font-lock)
 
-;; Turn on font lock when in n3 mode
-(add-hook 'n3-mode-hook
-          'turn-on-font-lock)
-          
-          (setq auto-mode-alist
-                (append
-                 (list
-                               '("\\.n3" . n3-mode)
-                                       '("\\.owl" . n3-mode))
-                                              auto-mode-alist))
+(setq auto-mode-alist
+    (append
+        (list
+            '("\\.n3" . n3-mode)
+            '("\\.owl" . n3-mode))
+    auto-mode-alist))
+
+(server-start)
