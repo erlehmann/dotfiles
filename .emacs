@@ -37,4 +37,7 @@
             '("\\.owl" . n3-mode))
     auto-mode-alist))
 
+(setq browse-url-browser-function 'browse-url-generic
+    browse-url-generic-program "/usr/bin/conkeror")
+
 (server-start)
