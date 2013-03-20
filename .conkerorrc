@@ -13,6 +13,15 @@ add_hook("mode_line_hook", mode_line_adder(downloads_status_widget));
 add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
 remove_hook("mode_line_hook", mode_line_adder(clock_widget));
 
+add_hook("window_before_close_hook",
+         function (w) {
+             var result = yield w.minibuffer.read_single_character_option(
+                 $prompt = "Close window? (y/n)",
+                 $options = ["y", "n"]);
+             yield co_return(result == "y");
+
+         });
+
 define_variable("firebug_url",
     "http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js");
 
