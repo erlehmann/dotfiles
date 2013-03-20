@@ -1,5 +1,7 @@
 allow_browser_window_close = false;
 
+external_content_handlers.set('application/pdf', 'evince')
+
 cwd=get_home_directory();
 cwd.append("downloads");
 
