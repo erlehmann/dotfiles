@@ -22,20 +22,6 @@ add_hook("window_before_close_hook",
 
          });
 
-define_variable("firebug_url",
-    "http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js");
-
-function firebug (I) {
-    var doc = I.buffer.document;
-    var script = doc.createElement('script');
-    script.setAttribute('type', 'text/javascript');
-    script.setAttribute('src', firebug_url);
-    script.setAttribute('onload', 'firebug.init();');
-    doc.body.appendChild(script);
-}
-interactive("firebug", "open firebug lite", firebug);
-define_key(content_buffer_normal_keymap, "f12", "firebug");
-
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
 define_key(content_buffer_normal_keymap, "y", "block-images-toggle");
 define_key(content_buffer_normal_keymap, "j", "javascript-toggle");
@@ -55,20 +41,6 @@ define_webjump("wayback", function (url) {
         return "javascript:window.location.href='http://web.archive.org/web/*/'+window.location.href;";
     }
 }, $argument = "optional");
-
-register_user_stylesheet(
-    "data:text/css," + escape(
-        "@namespace url(\"http://www.w3.org/1999/xhtml\");" +
-        "span.__conkeror_hint { border-radius: 4px; display: block !important; font-size: 16px !important; line-height: 16px !important; padding: 2px !important; }" +
-        "body [title] { border-bottom: 2px dotted !important; cursor: help; position: relative; }" +
-        "body [title]:hover::after { background-color: white; border: 2px solid !important; color: black; content: attr(title); left: 0; position: absolute; top: 1.5em; z-index: 1; }" +
-        "head { display: block; }" +
-        "body { position: relative; }" +
-        "link[rel][title], link[rel][title]::before { display: inline-block; margin: 0.375em 0 0.375em 0.375em; padding: 0.375em; }" +
-        "link[rel][title]::before { background-color: white; border: 2px solid !important; color: black; content: attr(rel) ': ' attr(title); margin: 0; }" +
-        "link[rel=alternate][title][type='application/atom+xml']::before, link[rel=alternate][title][type='application/rss+xml']::before { content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJDSURBVHjajJJNSBRhGMd/887MzrQxRSLbFuYhoUhEKsMo8paHUKFLdBDrUIdunvq4RdClOq8Hb0FBSAVCUhFR1CGD/MrIJYqs1kLUXd382N356plZFOrUO/MMz/vO83+e93n+f+1zF+kQBoOQNLBJg0CTj7z/rvWjGbEOIwKp9O7WkhtQc/wMWrlIkP8Kc1lMS8eyFHpkpo5SgWCCVO7Z5JARhuz1Qg29fh87u6/9VWL1/SPc4Qy6n8c0FehiXin6dcCQaylDMhqGz8ydS2hKkmxNkWxowWnuBLHK6G2C8X6UJkBlxUmNqLYyNbzF74QLDrgFgh9LLE0NsPKxjW1Hz2EdPIubsOFdH2HgbwAlC4S19dT13o+3pS+vcSfvUcq9YnbwA6muW9hNpym/FWBxfh0CZkKGkPBZeJFhcWQAu6EN52QGZ/8prEKW+cdXq0039UiLXhUYzdjebOJQQI30UXp6mZn+Dtam32Afu0iyrgUvN0r+ZQbr8HncSpUVJfwRhBWC0hyGV8CxXBL5SWYf9sYBidYLIG2V87/ifVjTWAX6AlxeK2C0X8e58hOr/Qa2XJ3iLMWxB1h72tHs7bgryzHAN2o2gJorTrLxRHVazd0o4TXiyV2Yjs90uzauGvvppmqcLjwmbZ3V7BO2HOrBnbgrQRqWUgTZ5+Snx4WeKfzCCrmb3axODKNH+vvUyWjqyK4DiKQ0eXSpFsgVvLJQWpH+xSpr4otg/HI0TR/t97cxTUS+QxIMRTLi/9ZYJPI/AgwAoc3W7ZrqR2IAAAAASUVORK5CYII=') ' ' attr(title); }"
-    )
-);
 
 require("block-content-focus-change.js");
 
@@ -134,10 +106,10 @@ interactive("block-images-toggle",
     function (I) {
         if (content_policy_bytype_table.image == block_content) {
             content_policy_bytype_table.image = function () content_policy_accept;
-            I.minibuffer.message("Images are allowed.");
+            I.minibuffer.message("Images allowed.");
         } else {
             content_policy_bytype_table.image = block_content;
-            I.minibuffer.message("Images are blocked.");
+            I.minibuffer.message("Images blocked.");
         }
     }
 );
@@ -155,33 +127,10 @@ interactive("javascript-toggle",
     }
 );
 
-function content_policy_widget (window) {
-    this.class_name = "content-policy-widget";
-    text_widget.call(this, window);
-    this.add_hook("keypress_hook");
-};
-
-content_policy_widget.prototype = {
-    constructor: content_policy_widget,
-    __proto__: text_widget.prototype,
-    update: function () {
-        var text = ""
-        if (content_policy_bytype_table.image == block_content) {
-            text += "noIMG"
-        } else {
-            text += "IMG"
-        };
-        text += " ";
-        if (get_pref('javascript.enabled')) {
-            text += "JS";
-        } else {
-            text += "noJS";
-        };
-        this.view.text = text;
-    }
-};
-
-add_hook("mode_line_hook", mode_line_adder(content_policy_widget));
+let (sheet = get_home_directory()) {
+    sheet.appendRelativePath('.conkerorrc/userstyle.css');
+    register_user_stylesheet(make_uri(sheet));
+}
 
 require("adblockplus.js");
 
