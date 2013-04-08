@@ -108,7 +108,6 @@ assign [class="^Links$"] → 1: Web
 assign [class="^Claws-mail$"] → 2: mail
 assign [class="^Gajim$"] → 4: xmpp
 assign [class="^Emacs$"] → 5: text
-assign [class="^Geany$"] → 5: text
 assign [class="^Rhythmbox$"] → 6: media
 assign [class="^Totem$"] → 6: media
 
