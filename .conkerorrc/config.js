@@ -24,6 +24,7 @@ add_hook("window_before_close_hook",
 
 define_key(content_buffer_normal_keymap, "d", "follow-new-buffer-background");
 define_key(content_buffer_normal_keymap, "y", "block-images-toggle");
+define_key(content_buffer_normal_keymap, "Y", "block-stylesheets-toggle");
 define_key(content_buffer_normal_keymap, "j", "javascript-toggle");
 define_key(content_buffer_normal_keymap, "W", "content-policy-whitelist-show");
 define_key(content_buffer_normal_keymap, "w", "content-policy-whitelist-toggle-current-origin");
@@ -110,6 +111,19 @@ interactive("block-images-toggle",
         } else {
             content_policy_bytype_table.image = block_content;
             I.minibuffer.message("Images blocked.");
+        }
+    }
+);
+
+interactive("block-stylesheets-toggle",
+    "Turn the stylesheet blocking off if it is on and on if it is off.",
+    function (I) {
+        if (content_policy_bytype_table.stylesheet == block_content) {
+            content_policy_bytype_table.stylesheet = function () content_policy_accept;
+            I.minibuffer.message("Stylesheets allowed.");
+        } else {
+            content_policy_bytype_table.stylesheet = block_content;
+            I.minibuffer.message("Stylesheets blocked.");
         }
     }
 );
