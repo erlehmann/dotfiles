@@ -12,14 +12,18 @@ body [title] {
  cursor: help;
  border-bottom: 2px solid inherit;
  position: relative;
- z-index: 0;
+ z-index: auto;
 }
 
 body [title]:hover::after {
- -moz-appearance: tooltip;
- color: inherit;
+ background-color: #ffffdf;
+ color: black;
  content: attr(title);
+ display: block;
+ left: 0;
  position: absolute;
+ outline: 1px solid black;
+ top: 100%;
  z-index: 1;
 }
 
